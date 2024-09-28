@@ -1,10 +1,11 @@
+require('dotenv').config({ path: './.env' });  // Explicitly load the .env file
+
 const mongoose = require('mongoose');
 mongoose.set("strictQuery", false);
 
-// Load environment variables from .env file
-require('dotenv').config();
+const mongoURI = process.env.MONGODB_URI;
 
-const mongoURI = process.env.MONGODB_URI;  // Use MONGODB_URI now
+console.log('Mongo URI:', mongoURI);  // Debugging step
 
 const connectToMongo = async () => {
     try {
