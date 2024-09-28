@@ -7,11 +7,11 @@ const Quizes = () => {
   // Fetch quizzes from the API
   const fetchQuizzes = async () => {
     try {
-      const response = await fetch('http://localhost:5001/quizzes'); // Update with your API endpoint
+      const response = await fetch("http://localhost:5001/quizzes"); // Update with your API endpoint
       const data = await response.json();
       setQuizzes(data); // Assuming the API returns an array of quizzes
     } catch (error) {
-      console.error('Error fetching quizzes:', error);
+      console.error("Error fetching quizzes:", error);
     }
   };
 
@@ -28,12 +28,12 @@ const Quizes = () => {
               Quiz
             </h1>
             <Link to="/quizForm">
-              <button className="text-sm font-medium cursor-pointer bg-[#4668DF] hover:bg-[#5a79e9] p-3 rounded-lg text-white">
+              <div className="text-sm font-medium cursor-pointer bg-[#4668DF] hover:bg-[#5a79e9] p-3 rounded-lg text-white">
                 Create Quiz
-              </button>
+              </div>
             </Link>
           </div>
-          <div className="flex justify-center flex-col items-center mt-6">
+          <div className="flex flex-col mt-6">
             {quizzes.length === 0 ? (
               <>
                 <h2 className="text-xl font-semibold text-gray-700 mb-4 dark:text-white">
@@ -48,7 +48,9 @@ const Quizes = () => {
             ) : (
               <div>
                 {quizzes.map((quiz) => (
-                  <div key={quiz._id} className="quiz-item"> {/* Assuming quiz._id is the unique identifier */}
+                  <div key={quiz._id} className="quiz-item">
+                    {" "}
+                    {/* Assuming quiz._id is the unique identifier */}
                     <h3 className="text-lg font-semibold">{quiz.title}</h3>
                   </div>
                 ))}

@@ -1,12 +1,14 @@
 const mongoose = require('mongoose');
 mongoose.set("strictQuery", false);
 
-const mongoURI = "mongodb://localhost:27017/Quizinaut?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false";
- // Change this string if you want to deploy it in some db
+// Load environment variables from .env file
+require('dotenv').config();
+
+const mongoURI = process.env.MONGODB_URI;  // Use MONGODB_URI now
 
 const connectToMongo = async () => {
     try {
-        await mongoose.connect(mongoURI);  // Use await for the promise as callback function is no longer available in new version
+        await mongoose.connect(mongoURI);  // Connect using the correct URI
         console.log('Connected To Mongo Successfully');
     } catch (error) {
         console.error('Error connecting to Mongo:', error);

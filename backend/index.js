@@ -1,25 +1,18 @@
-// server.js
 const express = require('express');
-const mongoose = require('mongoose');
+const mongoose = require('mongoose');  // Add this line to import mongoose
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const connectToMongo = require('./db');  // Import the connection function
 
 const app = express();
 const port = process.env.PORT || 5001;
 
+// Middleware
 app.use(cors());
 app.use(bodyParser.json());
 
-// MongoDB connection
-mongoose.connect('mongodb://localhost:27017/quizdb', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-const db = mongoose.connection;
-db.once('open', () => {
-  console.log('Connected to MongoDB');
-});
+// Connect to MongoDB
+connectToMongo();  // Connect to MongoDB when the server starts
 
 // Define Quiz schema and model
 const quizSchema = new mongoose.Schema({
