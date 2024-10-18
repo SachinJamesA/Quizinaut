@@ -7,7 +7,7 @@ function Alert(props) {
         }
         const lower = word.toLowerCase();
         return lower.charAt(0).toUpperCase() + lower.slice(1);
-    }
+    };
 
     const getAlertStyle = (type) => {
         switch (type) {
@@ -23,12 +23,19 @@ function Alert(props) {
             default:
                 return 'bg-gray-100 text-gray-700 border-gray-400';
         }
-    }
+    };
 
     return (
-        <div style={{ height: '100px', position: 'fixed', top: '64px', width: '100%', zIndex: '9999' }}>
+        <div style={{ 
+            height: '64px', 
+            position: 'fixed', 
+            top: '80px', 
+            right: '20px', // Positioning it towards the right
+            width: '30%', 
+            zIndex: '50' 
+        }}>
             {props.alert && (
-                <div className={`border-l-4 p-4 ${getAlertStyle(props.alert.type)} rounded`} role="alert">
+                <div className={`border-l-4 p-4 ${getAlertStyle(props.alert.type)} rounded-lg shadow-lg`} role="alert">
                     <strong>{capitalize(props.alert.type)}</strong>: {props.alert.msg}
                 </div>
             )}

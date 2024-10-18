@@ -11,10 +11,7 @@ import Dashboard from "./mycomponents/Dashboard";
 import Feedback from "./mycomponents/Feedback";
 import Navbar from "./mycomponents/Navbar";
 import QuizForm from "./mycomponents/QuizForm";
-
-// import QuizForm from "./mycomponents/QuizForm";
-import QuizSubmit from "./mycomponents/QuizSubmit";
-import QuizList from "./mycomponents/QuizList";
+import PlayQuiz from "./mycomponents/PlayQuiz";
 
 function App() {
   const [alert, setAlert] = useState(null);
@@ -27,23 +24,21 @@ function App() {
       setAlert(null);
     }, 2000);
   };
+
   return (
     <Router>
-      <Navbar showAlert={showAlert}/>
-      <Alert alert={alert}/>
+      <Navbar showAlert={showAlert} />
+      <Alert alert={alert} />
       <Routes>
-        {/* <Route element={<Alert />} alert={alert} /> */}
         <Route path="/" element={<Start showAlert={showAlert} />} />
         <Route path="/main" element={<Main />} />
-        <Route path="/quizes" element={<Quizes />} />
+        <Route path="/quizes" element={<Quizes showAlert={showAlert} />} />
         <Route path="/QuizForm" element={<QuizForm showAlert={showAlert} />} />
+        <Route path="/playquiz" element={<PlayQuiz />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/feedback" element={<Feedback />} />
         <Route path="/signup" element={<Signup showAlert={showAlert} />} />
         <Route path="/login" element={<Login showAlert={showAlert} />} />
-        {/* <Route path="/QuizForm" element={<QuizForm />} /> */}
-        <Route path="/QuizSubmit" element={<QuizSubmit />} />
-        <Route path="/QuizList" element={<QuizList />} /> 
       </Routes>
     </Router>
   );

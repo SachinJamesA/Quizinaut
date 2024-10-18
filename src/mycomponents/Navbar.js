@@ -9,6 +9,7 @@ import { FaSun, FaMoon } from "react-icons/fa";
 const Navbar = (props) => {
   const [activeLink, setActiveLink] = useState("");
 
+  // eslint-disable-next-line 
   const [active, setActive] = useState("navbar");
 
   const showBar = (event) => {
@@ -42,7 +43,7 @@ const Navbar = (props) => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
      // Show alert only when theme is toggled
-     props.showAlert(`Switched to ${newTheme === "dark" ? "Dark" : "Light"} Mode`, "warning");
+     props.showAlert(`Switched to ${newTheme === "dark" ? "Dark" : "Light"} Mode`, "success");
   };
 
   return (

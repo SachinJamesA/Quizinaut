@@ -2,23 +2,25 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const UserSchema = new Schema({
-    name:{
+    name: {
         type: String,
         required: true,
     },
-    email:{
+    email: {
         type: String,
         required: true,
-        // unique: true
+        unique: true,  // Enforce uniqueness
+        match: /.+\@.+\..+/  // Basic email validation
     },
-    password:{
+    password: {
         type: String,
         required: true,
     },
-    date:{
+    date: {
         type: Date,
         default: Date.now,
     }
-  });
-  const User = mongoose.model('user', UserSchema);
-  module.exports = User;
+}, { timestamps: true });  // Automatically manage createdAt and updatedAt
+
+const User = mongoose.model('User', UserSchema);  // Use 'User' as the model name
+module.exports = User;

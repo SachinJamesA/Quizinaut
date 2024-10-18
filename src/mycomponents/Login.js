@@ -17,17 +17,19 @@ const Login = (props) => {
         password: credentials.password,
       }),
     });
+  
     const json = await response.json();
     console.log(json);
+  
     if (json.success) {
-      // Save the auth token and redirect
       localStorage.setItem("token", json.authtoken);
-      props.showAlert("Loged in Successfully ", "success");
+      props.showAlert("Logged in Successfully", "success");
       navigate("/");
     } else {
       props.showAlert("Invalid Details", "danger");
     }
   };
+  
 
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
