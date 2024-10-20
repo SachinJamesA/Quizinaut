@@ -1,157 +1,93 @@
 import React, { useState, useEffect } from "react";
-import { FaBars } from "react-icons/fa6";
+import { FaBars, FaSun, FaMoon } from "react-icons/fa";
 import { IoCloseCircle } from "react-icons/io5";
-import { Link } from "react-router-dom";
-// import { GoPerson } from "react-icons/go";
-import { useNavigate } from "react-router-dom";
-import { FaSun, FaMoon } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 
-const Navbar = (props) => {
-  const [activeLink, setActiveLink] = useState("");
-
-  // eslint-disable-next-line 
+const Navbar = ({ showAlert }) => {
+  const [activeLink, setActiveLink] = useState("Home");
   const [active, setActive] = useState("navbar");
-
-  const showBar = (event) => {
-    event.preventDefault();
-    setActive("navbar activeNavbar");
-  };
-  const closeBar = (event) => {
-    event.preventDefault();
-    setActive("navbar");
-  };
-
-  let navigate = useNavigate();
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
-  };
-  // let location = useLocation();
-
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  const navigate = useNavigate();
+
+  // Handle the navbar visibility
+  const toggleNavbar = (isOpen) => {
+    setActive(isOpen ? "navbar activeNavbar" : "navbar");
+  };
 
   useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
+    document.documentElement.classList.toggle("dark", theme === "dark");
     localStorage.setItem("theme", theme);
   }, [theme]);
 
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
-     // Show alert only when theme is toggled
-     props.showAlert(`Switched to ${newTheme === "dark" ? "Dark" : "Light"} Mode`, "success");
+    showAlert(`Switched to ${newTheme === "dark" ? "Dark" : "Light"} Mode`, "success");
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
   };
 
   return (
-    <div className="navbar-section">
-      <div className="header flex items-center justify-between px-3 py-3 lg:py-4 border-b-[2px] border-solid border-[hsl(214.3_31.8%_91.4%)] dark:border-b-[1px] dark:border-b-solid dark:border-[hsl(214.3_31.8%_18.4%)]">
-        <div className="logodiv">
+    <div className="navbar-section sticky top-0 lg:bg-white/20 z-[1000] lg:backdrop-blur-xl lg:shadow-xl transition-all duration-300 dark:bg-gray-900">
+      <div className="header flex items-center justify-between py-2 lg:py-0">
+        <div className="logodiv lg:static lg:mr-4 lg:w-auto w-40 ml-3">
           <Link to="/">
-            <h1 className="text-xl font-bold w-24 xl:relative xl:z-[100000] dark:text-white">
-              Quizinaut
-            </h1>
+            <h1 className="text-xl font-bold w-24 xl:relative xl:z-[100000] dark:text-white">Quizinaut</h1>
           </Link>
         </div>
 
-        <div
-          className={` bg-white w-full p-4 text-center absolute top-0 left-[-500%] z-[3000] lg:left-0 lg:bg-transparent xl:bg-white justify-center lg:flex lg:items-center lg:justify-end  dark:bg-[rgb(14,16,21)]`}
-        >
-          <div className="navList lg:flex lg:items-center">
-            <li className="navItem list-none lg:mr-3">
-              <Link
-                to="/"
-                className={`navLink text-md font-medium hover:text-[#4668DF] hover:cursor-pointer dark:text-white ${
-                  activeLink === "Home" ? "text-[#775BE5]" : "text-black"
-                }`}
-                onClick={() => setActiveLink("Home")}
-              >
-                Home
-              </Link>
-            </li>
-            <li className="navItem list-none mt-2 lg:mt-0 lg:mr-3">
-              <Link
-                to="/dashboard"
-                className={`navLink text-md font-medium hover:text-[#4668DF] hover:cursor-pointer dark:text-white ${
-                  activeLink === "Dashboard" ? "text-[#775BE5]" : "text-black"
-                }`}
-                onClick={() => setActiveLink("Dashboard")}
-              >
-                Dashboard
-              </Link>
-            </li>
-            <li className="navItem list-none mt-2 lg:mt-0 lg:mr-3">
-              <Link
-                to="/quizes"
-                className={`navLink text-md font-medium hover:text-[#4668DF] hover:cursor-pointer dark:text-white ${
-                  activeLink === "Quizes" ? "text-[#775BE5]" : "text-black"
-                }`}
-                onClick={() => setActiveLink("Quizes")}
-              >
-                Quizes
-              </Link>
-            </li>
-            <li className="navItem list-none mt-2 lg:mt-0 lg:mr-2">
-              <Link
-                to="/feedback"
-                className="navLink text-md font-medium hover:bg-[hsl(214.3_31.8%_91.4%)] px-2 py-1 rounded-lg lg:border-2 lg:border-solid lg:border-[hsl(214.3 31.8% 91.4%)] border-none hover:cursor-pointer dark:text-white dark:border dark:border-solid dark:border-[hsl(214.3 31.8% 91.4%)] dark:hover:text-[rgb(14,16,21)]"
-              >
-                Feedback
-              </Link>
-            </li>
+        {/* Navbar content */}
+        <div className={`${active} bg-slate-800 lg:bg-transparent w-full p-4 text-center absolute top-0 left-[-500%] z-[3000] lg:left-0 lg:flex lg:items-center md:justify-between lg:justify-end transition-transform duration-300 lg:static`}>
+          {/* Nav List */}
+          <ul className="navList lg:flex lg:items-center">
+            {["Home", "Quizes", "Feedback"].map((link) => (
+              <li className="navItem list-none mt-2 lg:mt-0 lg:mr-3" key={link}>
+                <Link
+                  to={`/${link.toLowerCase()}`}
+                  className={`navLink text-md font-medium hover:text-[#4668DF] dark:text-white ${activeLink === link ? "text-[#775BE5] dark:text-[#775BE5]" : "text-black"}`}
+                  onClick={() => setActiveLink(link)}
+                >
+                  {link}
+                </Link>
+              </li>
+            ))}
 
+            {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className={`px-3 py-2 rounded lg:mr-1 transition-colors duration-300 
-              ${
-                theme === "light"
-                  ? "bg-transparent text-black hover:bg-[rgb(230,230,230)]"
-                  : "bg-[rgb(14,16,21)] text-white hover:bg-[rgb(34,37,45)]"
-              } dark:bg-[rgb(14,16,21)] dark:hover:bg-[rgb(57,61,72)]`}
+              aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+              className={`px-3 py-2 rounded lg:mr-1 transition-colors duration-300 ${theme === "light" ? "bg-[rgb(240,240,240)] text-black hover:bg-[rgb(230,230,230)]" : "bg-[rgb(30,30,30)] text-white hover:bg-[rgb(50,50,50)]"}`}
             >
               {theme === "light" ? <FaMoon /> : <FaSun />}
             </button>
 
-            <div className="btn flex justify-center items-center mt-4 lg:mt-0 ">
+            {/* Sign Up and Login Buttons */}
+            <div className="btn flex justify-center items-center mt-4 lg:mt-0">
               {!localStorage.getItem("token") ? (
-                <form className="d-flex">
-                  <Link
-                    className="rounded-lg lg:border-2 lg:border-solid lg:border-[hsl(214.3 31.8% 91.4%)] px-2 py-1 bg-[#367cf4] text-md font-medium text-white dark:border-none"
-                    to="/signup"
-                    role="button"
-                  >
-                    Signup
-                  </Link>
-                  <Link
-                    className="rounded-lg lg:border-2 lg:border-solid lg:border-[hsl(214.3 31.8% 91.4%)] px-2 py-1 bg-[#367cf4] text-md font-medium text-white dark:border-none dark:lg:mr-1"
-                    to="/login"
-                    role="button"
-                  >
-                    Login
-                  </Link>
-                </form>
+                <div className="flex gap-2">
+                  <Link className="rounded-lg lg:border-2 lg:border-solid lg:border-[hsl(214.3 31.8% 91.4%)] px-2 py-1 bg-[#367cf4] text-md font-medium text-white" to="/signup">Signup</Link>
+                  <Link className="rounded-lg lg:border-2 lg:border-solid lg:border-[hsl(214.3 31.8% 91.4%)] px-2 py-1 bg-[#367cf4] text-md font-medium text-white" to="/login">Login</Link>
+                </div>
               ) : (
-                <button
-                  onClick={handleLogout}
-                  className="rounded-lg lg:border-2 lg:border-solid lg:border-[hsl(214.3 31.8% 91.4%)] px-2 py-1 bg-[#367cf4] text-md font-medium text-white dark:border-none"
-                >
+                <button onClick={handleLogout} className="rounded-lg lg:border-2 lg:border-solid lg:border-[hsl(214.3 31.8% 91.4%)] px-2 py-1 bg-[#367cf4] text-md font-medium text-white">
                   Logout
                 </button>
               )}
             </div>
-            <div
-              className="absolute top-3 right-3 text-3xl cursor-pointer lg:hidden"
-              onClick={closeBar}
-            >
+
+            {/* Close Button for Mobile */}
+            <div className="absolute top-3 right-3 text-3xl cursor-pointer lg:hidden transition-transform duration-300 hover:rotate-90" onClick={() => toggleNavbar(false)}>
               <IoCloseCircle />
             </div>
-          </div>
+          </ul>
         </div>
+
+        {/* Hamburger Menu */}
         <div className="hamburger text-3xl lg:hidden">
-          <button className="bars" onClick={showBar}>
+          <button className="bars transition-transform duration-300 hover:rotate-90 text-black" onClick={() => toggleNavbar(true)}>
             <FaBars />
           </button>
         </div>

@@ -30,7 +30,7 @@ function Alert(props) {
             height: '64px', 
             position: 'fixed', 
             top: '80px', 
-            right: '20px', // Positioning it towards the right
+            left: '20px', // Positioning it towards the right
             width: '30%', 
             zIndex: '50' 
         }}>

@@ -1,6 +1,5 @@
-import React from 'react'
-// import Navbar from './Navbar'
-import Swal from 'sweetalert2'
+import React from 'react';
+import Swal from 'sweetalert2';
 
 const onSubmit = async (event) => {
     event.preventDefault();
@@ -12,45 +11,63 @@ const onSubmit = async (event) => {
     const json = JSON.stringify(object);
 
     const res = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: json
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+        },
+        body: json,
     }).then((res) => res.json());
 
     if (res.success) {
         Swal.fire({
             title: "Success!",
             text: "Message Sent Successfully!",
-            icon: "success"
-        });    
+            icon: "success",
+        });
     }
-  };
+};
 
 const Feedback = () => {
-  return (
-    // <Navbar/>
-    <section className='flex justify-center items-center'>
-    <form className='max-w-[600px] w-full bg-[#F4F4F4] px-[30px] py-[25px] rounded-[8px] boxShadowContact text-[#333] m-[25px]'  onSubmit={onSubmit}>
-        <h2 className='text-3xl text-center'>Contact Form</h2>
-        <div className="input-box mt-20px ">
-            <label>Full Name</label>
-            <input type="text" className="field w-full h-[50px] bg-transparent border-2 border-solid border-[#ddd] outline-none rounded-[6px] p-[15px] text-base text-[#333] mt-2" placeholder='Enter your name' name='name' required />
-        </div>
-        <div className="input-box mt-20px ">
-            <label>Email Address</label>
-            <input type="emali" className="field w-full h-[50px] bg-transparent border-2 border-solid border-[#ddd] outline-none rounded-[6px] p-[15px] text-base text-[#333] mt-2" placeholder='Enter your email' name='email' required />
-        </div>
-        <div className="input-box mt-20px ">
-            <label>Your Message</label>
-            <textarea name="message" className="field mess w-full bg-transparent border-2 border-solid border-[#ddd] outline-none rounded-[6px] p-[15px] text-base text-[#333] mt-2 h-[200px] resize-none" placeholder='Enter Your Message' required></textarea>
-        </div>
-        <button className='w-full h-[55px] bg-[#E93740] border-none rounded-[6px] boxShadowContact cursor-pointer text-base text-white font-medium mt-[25px] duration-[0.5s] hover:bg-[#fc5961]' type='submit'>Send Message</button>
-    </form>
-</section>
-  )
-}
+    return (
+        <section className="flex justify-center items-center min-h-screen py-8 dark:bg-gray-900">
+            <form className="max-w-[600px] w-full bg-white dark:bg-gray-800 px-8 py-6 rounded-lg shadow-lg border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-white" onSubmit={onSubmit}>
+                <h2 className="text-3xl font-semibold text-center mb-6">Contact Form</h2>
+                <div className="input-box mb-4">
+                    <label className="block mb-2">Full Name</label>
+                    <input
+                        type="text"
+                        className="field w-full h-[50px] bg-transparent border border-gray-300 dark:border-gray-600 outline-none rounded-md p-2 text-base text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition duration-200 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-1 focus:ring-blue-500 dark:focus:ring-blue-400"
+                        placeholder="Enter your name"
+                        name="name"
+                        required
+                    />
+                </div>
+                <div className="input-box mb-4">
+                    <label className="block mb-2">Email Address</label>
+                    <input
+                        type="email"
+                        className="field w-full h-[50px] bg-transparent border border-gray-300 dark:border-gray-600 outline-none rounded-md p-2 text-base text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition duration-200 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-1 focus:ring-blue-500 dark:focus:ring-blue-400"
+                        placeholder="Enter your email"
+                        name="email"
+                        required
+                    />
+                </div>
+                <div className="input-box mb-4">
+                    <label className="block mb-2">Your Message</label>
+                    <textarea
+                        name="message"
+                        className="field w-full bg-transparent border border-gray-300 dark:border-gray-600 outline-none rounded-md p-2 text-base text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition duration-200 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-1 focus:ring-blue-500 dark:focus:ring-blue-400 h-[200px] resize-none"
+                        placeholder="Enter Your Message"
+                        required
+                    ></textarea>
+                </div>
+                <button className="w-full h-[55px] bg-blue-600 dark:bg-blue-700 border-none rounded-md cursor-pointer text-base text-white font-medium duration-300 hover:bg-blue-700 dark:hover:bg-blue-800" type="submit">
+                    Send Message
+                </button>
+            </form>
+        </section>
+    );
+};
 
-export default Feedback
+export default Feedback;
