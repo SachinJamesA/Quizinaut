@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import QuizPlay from "./PlayQuiz"; // Import the QuizPlay component
 
 const Quizes = (props) => {
   const [quizzes, setQuizzes] = useState([]);
+  // eslint-disable-next-line
   const [selectedQuiz, setSelectedQuiz] = useState(null);
   const navigate = useNavigate(); // For navigation
 
@@ -69,10 +69,10 @@ const Quizes = (props) => {
   }, []);
 
   return (
-    <div className="min-h-screen dark:bg-gray-900 flex items-center justify-center">
-      <div className="w-[90%] lg:w-[70%] border-2 border-solid border-gray-300 dark:border-gray-700 rounded-lg shadow-lg bg-white dark:bg-gray-800">
-        <div className="flex items-center justify-between mb-10 px-6 py-4 border-b-2 border-gray-200 dark:border-gray-700">
-          <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Quizzes</h1>
+    <div className="min-h-screen dark:bg-gray-900 flex flex-col items-center justify-center p-4">
+      <div className="w-full lg:w-[70%] max-w-5xl border-2 border-solid border-gray-300 dark:border-gray-700 rounded-lg shadow-lg bg-white dark:bg-gray-800">
+        <div className="flex flex-col md:flex-row items-center justify-between mb-10 px-6 py-4 border-b-2 border-gray-200 dark:border-gray-700">
+          <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-4 md:mb-0">Quizzes</h1>
           <Link to="/quizForm">
             <div className="text-sm font-medium cursor-pointer bg-[#4668DF] hover:bg-[#5a79e9] p-3 rounded-lg text-white">
               Create Quiz
@@ -92,17 +92,19 @@ const Quizes = (props) => {
               </Link>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="grid gap-6 md:grid-cols-2">
               {quizzes.map((quiz) => (
                 <div
                   key={quiz._id}
-                  className="quiz-item border rounded-lg p-4 bg-gray-100 dark:bg-gray-700 shadow hover:shadow-lg transition-shadow duration-300 flex justify-between items-center"
+                  className="quiz-item border rounded-lg p-4 bg-gray-100 dark:bg-gray-700 shadow hover:shadow-lg transition-shadow duration-300 flex flex-col justify-between"
                 >
-                  <div className="flex-1"> {/* Allows the title and description to take available space */}
-                    <h3 className="text-lg font-semibold text-gray-800 dark:text-white">{quiz.title}</h3>
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
+                      {quiz.title}
+                    </h3>
                     <p className="text-gray-600 dark:text-gray-300">{quiz.description}</p>
                   </div>
-                  <div className="flex gap-4"> {/* Aligns buttons to the right */}
+                  <div className="flex mt-4 justify-end gap-4">
                     <button
                       onClick={() => handlePlayQuiz(quiz)}
                       className="bg-[#4668DF] hover:bg-[#5a79e9] text-white p-2 rounded-lg"

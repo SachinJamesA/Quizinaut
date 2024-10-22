@@ -11,7 +11,7 @@ const Navbar = ({ showAlert }) => {
 
   // Handle the navbar visibility
   const toggleNavbar = (isOpen) => {
-    setActive(isOpen ? "navbar activeNavbar" : "navbar");
+    setActive(isOpen ? "navbar activeNavbar bg-white/90 dark:bg-gray-800" : "navbar");
   };
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const Navbar = ({ showAlert }) => {
   };
 
   return (
-    <div className="navbar-section sticky top-0 lg:bg-white/20 z-[1000] lg:backdrop-blur-xl lg:shadow-xl transition-all duration-300 dark:bg-gray-900">
+    <div className="navbar-section sticky top-0 bg-white/20 dark:bg-gray-900 z-[1000] backdrop-blur-xl shadow-xl transition-all duration-300 lg:bg-white/20 lg:dark:bg-gray-900">
       <div className="header flex items-center justify-between py-2 lg:py-0">
         <div className="logodiv lg:static lg:mr-4 lg:w-auto w-40 ml-3">
           <Link to="/">
@@ -40,7 +40,7 @@ const Navbar = ({ showAlert }) => {
         </div>
 
         {/* Navbar content */}
-        <div className={`${active} bg-slate-800 lg:bg-transparent w-full p-4 text-center absolute top-0 left-[-500%] z-[3000] lg:left-0 lg:flex lg:items-center md:justify-between lg:justify-end transition-transform duration-300 lg:static`}>
+        <div className={`${active} lg:bg-transparent w-full p-4 text-center absolute top-0 left-[-500%] z-[3000] lg:left-0 lg:flex lg:items-center md:justify-between lg:justify-end transition-transform duration-300 lg:static`}>
           {/* Nav List */}
           <ul className="navList lg:flex lg:items-center">
             {["Home", "Quizes", "Feedback"].map((link) => (
@@ -55,11 +55,11 @@ const Navbar = ({ showAlert }) => {
               </li>
             ))}
 
-            {/* Theme Toggle */}
+            {/* Theme Toggle - Desktop view */}
             <button
               onClick={toggleTheme}
               aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
-              className={`px-3 py-2 rounded lg:mr-1 transition-colors duration-300 ${theme === "light" ? "bg-[rgb(240,240,240)] text-black hover:bg-[rgb(230,230,230)]" : "bg-[rgb(30,30,30)] text-white hover:bg-[rgb(50,50,50)]"}`}
+              className={`hidden lg:block px-3 py-2 rounded lg:mr-1 transition-colors duration-300 ${theme === "light" ? "bg-[rgb(240,240,240)] text-black hover:bg-[rgb(230,230,230)]" : "bg-[rgb(30,30,30)] text-white hover:bg-[rgb(50,50,50)]"}`}
             >
               {theme === "light" ? <FaMoon /> : <FaSun />}
             </button>
@@ -85,9 +85,19 @@ const Navbar = ({ showAlert }) => {
           </ul>
         </div>
 
-        {/* Hamburger Menu */}
-        <div className="hamburger text-3xl lg:hidden">
-          <button className="bars transition-transform duration-300 hover:rotate-90 text-black" onClick={() => toggleNavbar(true)}>
+        {/* Hamburger Menu and Theme Toggle */}
+        <div className="hamburger-theme-toggle flex items-center space-x-3 lg:hidden mr-3">
+          <button
+            onClick={toggleTheme}
+            aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+            className={`px-3 py-2 rounded transition-colors duration-300 ${theme === "light" ? "bg-[rgb(240,240,240)] text-black hover:bg-[rgb(230,230,230)]" : "bg-[rgb(30,30,30)] text-white hover:bg-[rgb(50,50,50)]"}`}
+          >
+            {theme === "light" ? <FaMoon /> : <FaSun />}
+          </button>
+          <button
+            className="bars transition-transform duration-300 hover:rotate-90 text-black dark:text-white"
+            onClick={() => toggleNavbar(true)}
+          >
             <FaBars />
           </button>
         </div>

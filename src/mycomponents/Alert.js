@@ -26,14 +26,7 @@ function Alert(props) {
     };
 
     return (
-        <div style={{ 
-            height: '64px', 
-            position: 'fixed', 
-            top: '80px', 
-            left: '20px', // Positioning it towards the right
-            width: '30%', 
-            zIndex: '50' 
-        }}>
+        <div className="fixed z-50 top-20 left-4 right-4 md:left-8 md:right-auto md:top-20 lg:left-20 lg:top-20 md:w-1/2 lg:w-1/3 xl:w-1/4">
             {props.alert && (
                 <div className={`border-l-4 p-4 ${getAlertStyle(props.alert.type)} rounded-lg shadow-lg`} role="alert">
                     <strong>{capitalize(props.alert.type)}</strong>: {props.alert.msg}
